@@ -23,6 +23,6 @@ mongoose.connect(
     () => console.log('Connected to DB')
 );
 
-app.listen(3000);
+app.listen(3001);
 
 //mongodb+srv://<username>:<password>@cluster1.jew6whg.mongodb.net/?retryWrites=true&w=majority

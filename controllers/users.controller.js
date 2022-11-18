@@ -74,17 +74,19 @@ exports.createUser = async function (req, res, next) {
 
 exports.loginUser = async function (req, res, next) {
     // Valido datos para login
-    const {error} = loginValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
         // Verifico email
         const user = await User.findOne({mail: req.body.mail});
-        if (!user) return res.status(400).send("EMAIL or password invalid");
+        const error = { 
+            id: -1};
+        if (!user) return res.status(400).send(JSON.stringify(error));
         // Verifico password
         const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if (!validPassword) return res.status(400).send("Email or PASSWORD invalid");
-
+        if (!validPassword) return res.status(400).send(JSON.stringify(error));
         //Creo JWT y lo asigno
-        const token = jwt.sign({_id: user._id}, process.env.SECRET_TOKEN)
-        res.header('auth-token', token).send(token);
+        const data = { rol: user.rol,
+            id: user._id};
+        
+        
+        res.status(200).send(JSON.stringify(data));
 
 }
