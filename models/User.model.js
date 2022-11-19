@@ -14,6 +14,12 @@ const UserSchema = mongoose.Schema({
     rol:{
         type: String
     },
+    respuesta:{
+        type: String
+    },
+    telefono:{
+        type: String
+    }
 })
 
 module.exports = mongoose.model('User', UserSchema);
