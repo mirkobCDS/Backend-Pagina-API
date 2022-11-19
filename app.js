@@ -6,12 +6,14 @@ const app = express();
 require('dotenv/config');
 
 const userRoutes = require('./routes/user.route');
+const clasesRoutes = require('./routes/clases.route');
 
 app.use(cors());
 app.use(bodyParser.json());
 
 // ROUTES
 app.use('/users', userRoutes);
+app.use('/clases', clasesRoutes);
 
 app.get('/', (req, res) => {
     res.send('We are on home')

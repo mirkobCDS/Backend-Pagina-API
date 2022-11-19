@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const ClassModel = require('./Class.model');
+const ClaseModel = require('./Clase.model');
 
 //Hay que definir cómo vamos a representar al estado.
 const HiringSchema = mongoose.Schema({
     usuario: String,
-    clase: ClassModel,
+    clase: ClaseModel,
     telefonoContacto: String,
     mailContacto: String,
     horarioRef: String,
