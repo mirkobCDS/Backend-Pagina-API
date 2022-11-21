@@ -1,9 +1,20 @@
 const Clase = require('../models/Clase.model');
+const Comentario = require('../models/Comment.model');
+
 
 exports.getClases = async function (req, res, next) {
     try {
         const clases = await Clase.find();  // Trae todas las clases de la BD
         res.json(clases);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClaseById = async function (req, res, next) {
+    try {
+        const clase = await Clase.find(req.params.claseId);  // Trae todas las clases de la BD
+        res.json(clase);
     } catch (err) {
         res.json({message: err})
     }
@@ -21,7 +32,7 @@ exports.createClase = async function (req, res, next) {
         comentarios: req.body.comentarios,
         calificaciones: req.body.calificaciones,
         isPublicada: req.body.isPublicada,
-        isGrupal: req.body.isPublicada
+        isGrupal: req.body.isGrupal
     });
     try {
         const createdClase = await clase.save();
@@ -98,10 +109,13 @@ exports.comentarYValorarClase = async function (req, res, next) {
 }
 
 exports.comentarClase = async function (req, res, next) {
-    const newComment = {
+    const newComment = new Comentario({
+        "usuario": req.body.usuario,
         "comentario": req.body.comentario,
-        "isVisible": false
-    }
+        "isBloqueado": false,
+        "descargo": ""
+    })
+    console.log(newComment)
     try {
         const updatedClase = await Clase.updateOne(
             { _id: req.params.claseId },
@@ -149,6 +163,106 @@ exports.actualizarValoracion = async function (req, res, next) {
             { $set: { valoracion: average }},
         );
         res.json(updatedClase);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesByValoracion = async function (req, res, next) {
+    try {
+        const clases = await Clase.find();  // Trae todas las clases de la BD
+        const clasesSortedByValoracion = clases.sort(function(a, b) {return b.valoracion - a.valoracion});
+        res.send(clasesSortedByValoracion);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesByValoracionMayorA = async function (req, res, next) {
+    try {
+        const clases = await Clase.find({valoracion : { $gte: req.params.valoracion } });  // Trae todas las clases con valoracion mayor a...
+        const clasesSortedByValoracionMayorA = clases.sort(function(a, b) {return a.valoracion - b.valoracion});
+        res.send(clasesSortedByValoracionMayorA);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesGrupales = async function (req, res, next) {
+    try {
+        const clasesGrupales = await Clase.find({ isGrupal: true });
+        res.send(clasesGrupales);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesIndividuales = async function (req, res, next) {
+    try {
+        const clasesIndividuales = await Clase.find({ isGrupal: false });
+        res.send(clasesIndividuales);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesByMateria = async function (req, res, next) {
+    try {
+        const clasesByMateria = await Clase.find({ materia: req.body.materia });
+        res.send(clasesByMateria);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesByFrecuencia = async function (req, res, next) {
+    try {
+        const clasesByFrecuencia = await Clase.find({ frecuencia: req.body.frecuencia });
+        res.send(clasesByFrecuencia);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClasesByDuracion = async function (req, res, next) {
+    try {
+        const clasesByDuracion = await Clase.find({ duracion: req.body.duracion });
+        res.send(clasesByDuracion);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClaseByProfesor = async function (req, res, next) {
+    try {
+        const clase = await Clase.find(req.body.profesor);  // Trae todas las clases de la BD
+        res.json(clase);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getClaseBySolicitante = async function (req, res, next) {
+    try {
+        const clases = await Clase.find({ profesor: { $exists: true } }); 
+        res.send(clases);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.contratarClase = async function (req, res, next) {
+    const newSolicitud = {
+        "userId": req.body.userId,
+        "usuario": req.body.nombreSolicitante,
+        "estado": "Solicitada"
+    }
+    try {
+        const solicitarClase = await Clase.updateOne(
+            { _id: req.params.claseId },
+            { $push: { solicitudes: newSolicitud }},
+        );
+        res.send(solicitarClase);
     } catch (err) {
         res.json({message: err})
     }

@@ -1,0 +1,24 @@
+{
+    "profesor": "Profesor X",
+    "nombre": "Analisis Matematico",
+    "materia": "Matematica",
+    "duracion": "3 dias",
+    "frecuencia": "2 veces por semana",
+    "costo": 1000,
+    "valoracion": 0,
+    "comentarios": [{
+        "comentario": "Muy Buena",
+        "isVisible": true
+    }],
+    "calificaciones": [{
+        "valor": 100
+    }],
+    "isPublicada": true,
+    "isGrupal": true,
+    "solicitudes": [{
+        "userId": "1223456",
+        "usuario": "Juan Perez",
+        "estado": "Solicitada"
+    }],
+    "estado": "Aprobada"
+}

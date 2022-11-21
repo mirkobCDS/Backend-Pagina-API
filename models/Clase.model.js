@@ -16,7 +16,13 @@ const ClaseSchema = mongoose.Schema({
         valor: Number,
     }],
     isPublicada: Boolean,
-    isGrupal: Boolean
+    isGrupal: Boolean,
+    solicitudes: [{
+        userId: String,
+        usuario: String,
+        estado: String
+    }],
+    estado: String
 })
 
 module.exports = mongoose.model('Clase', ClaseSchema);
