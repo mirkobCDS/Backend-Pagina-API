@@ -23,6 +23,24 @@ exports.getUserById = async function (req, res, next) {
     }
 }
 
+exports.getUserByMail = async function (req, res, next) {
+    try {
+        const user = await User.findOne({mail:req.params.mail});
+        if (user == null){
+            data = {
+                _id:-1
+            }
+            res.send(data)
+        }
+        else{
+            res.send(user);
+        }
+        
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
 exports.deleteById = async function (req, res, next) {
     try {
     const removedUser = await User.remove({_id: req.params.userId});
@@ -34,9 +52,11 @@ exports.deleteById = async function (req, res, next) {
 
 exports.updateUser = async function (req, res, next) {
     try {
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(req.body.password, salt)
         const updatedUser = await User.updateOne(
             { _id: req.params.userId },
-            { $set: { nombre: req.body.nombre }}
+            { $set: { password: hashPassword}}
         );
         res.json(updatedUser);
     } catch (err) {

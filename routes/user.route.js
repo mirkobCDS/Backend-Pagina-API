@@ -3,8 +3,9 @@ const verify = require('./verifyToken');
 const router = express.Router();
 const UserController = require('../controllers/users.controller')
 
-router.get('/', verify, UserController.getUsers);
+router.get('/', UserController.getUsers);
 router.get('/:userId', UserController.getUserById);
+router.get('/mail/:mail', UserController.getUserByMail);
 router.delete('/:userId', UserController.deleteById);
 router.post('/create', UserController.createUser);
 router.patch('/:userId', UserController.updateUser);
