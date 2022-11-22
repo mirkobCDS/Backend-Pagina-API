@@ -21,7 +21,7 @@ router.get('/individuales', ClasesController.getClasesIndividuales);
 router.get('/by_materia', ClasesController.getClasesByMateria);
 router.get('/by_frecuencia', ClasesController.getClasesByFrecuencia);
 router.get('/by_duracion', ClasesController.getClasesByDuracion);
-router.get('/by_profesor', ClasesController.getClasesByProfesor);
+router.post('/by_profesor', ClasesController.getClasesByProfesor);
 router.patch('/solicitar_clase/:claseId', ClasesController.contratarClase);
 router.get('/solicitudes/:claseId', ClasesController.getSolicitudesById);
 router.get('/solicitudes/user/:userId', ClasesController.getSolicitudesByUserId);

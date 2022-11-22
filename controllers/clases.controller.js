@@ -26,6 +26,7 @@ exports.createClase = async function (req, res, next) {
         profesor: req.body.profesor,
         nombre: req.body.nombre,
         materia: req.body.materia,
+        descripcion: req.body.descripcion,
         duracion: req.body.duracion,
         frecuencia: req.body.frecuencia,
         costo: req.body.costo,

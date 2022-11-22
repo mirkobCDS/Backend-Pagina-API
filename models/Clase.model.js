@@ -4,6 +4,7 @@ const ClaseSchema = mongoose.Schema({
     profesor: String,
     nombre: String,
     materia: String,
+    descripcion: String,
     duracion: String,
     frecuencia: String,
     costo: Number,
