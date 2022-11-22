@@ -8,6 +8,7 @@ router.get('/all', ClasesController.getClases);
 router.get('/by_id/:claseId', ClasesController.getClaseById);
 router.post('/create', ClasesController.createClase);
 router.delete('/delete/:claseId', ClasesController.deleteClase);
+router.patch('/actualizar/:claseId', ClasesController.updateClase);
 router.patch('/publicar/:claseId', ClasesController.publicarClase);
 router.patch('/despublicar/:claseId', ClasesController.despublicarClase);
 router.patch('/comentar/:claseId', ClasesController.comentarClase);

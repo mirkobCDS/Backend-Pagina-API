@@ -33,7 +33,7 @@ exports.createClase = async function (req, res, next) {
         valoracion: req.body.valoracion,
         comentarios: req.body.comentarios,
         calificaciones: req.body.calificaciones,
-        isPublicada: req.body.isPublicada,
+        isPublicada: false,
         isGrupal: req.body.isGrupal
     });
     try {
@@ -47,12 +47,14 @@ exports.createClase = async function (req, res, next) {
 exports.updateClase = async function (req, res, next) {
     try {
         const updatedClase = await Clase.updateOne(
-            { _id: req.params.claseId }, //No se qué significa esto por ende no lo toco...
-            { $set: { nombre: req.body.nombre }},
-            { $set: { materia: req.body.materia }},
-            { $set: { duracion: req.body.duracion }},
-            { $set: { frecuencia: req.body.frecuencia }},
-            { $set: { costo: req.body.costo }},
+            { _id: req.params.claseId },
+            {$set: { nombre: req.body.nombre }},
+            {$set: { materia: req.body.materia }},
+            //El update solo permite updatear de a dos valores, si no no hace nada
+            //{ $set: { duracion: req.body.duracion }}, //
+           //{ $set: { frecuencia: req.body.frecuencia }}
+           //{ $set: { costo: req.body.costo }},
+           // { $set: { descripcion: req.body.descripcion }}
         );
         res.json(updatedClase);
     } catch (err) {
