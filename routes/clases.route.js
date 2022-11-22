@@ -4,8 +4,8 @@ const router = express.Router();
 const ClasesController = require('../controllers/clases.controller')
 
 
-router.get('/', ClasesController.getClases);
-router.get('/:claseId', ClasesController.getClaseById);
+router.get('/all', ClasesController.getClases);
+router.get('/by_id/:claseId', ClasesController.getClaseById);
 router.post('/create', ClasesController.createClase);
 router.delete('/delete/:claseId', ClasesController.deleteClase);
 router.patch('/publicar/:claseId', ClasesController.publicarClase);
@@ -21,8 +21,10 @@ router.get('/individuales', ClasesController.getClasesIndividuales);
 router.get('/by_materia', ClasesController.getClasesByMateria);
 router.get('/by_frecuencia', ClasesController.getClasesByFrecuencia);
 router.get('/by_duracion', ClasesController.getClasesByDuracion);
-router.get('/by_profesor', ClasesController.getClaseByProfesor);
-router.get('/by_solicitante', ClasesController.getClaseBySolicitante);
+router.get('/by_profesor', ClasesController.getClasesByProfesor);
 router.patch('/solicitar_clase/:claseId', ClasesController.contratarClase);
+router.get('/solicitudes/:claseId', ClasesController.getSolicitudesById);
+router.get('/solicitudes/user/:userId', ClasesController.getSolicitudesByUserId);
+
 
 module.exports = router;

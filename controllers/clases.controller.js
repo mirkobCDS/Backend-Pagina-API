@@ -13,10 +13,11 @@ exports.getClases = async function (req, res, next) {
 
 exports.getClaseById = async function (req, res, next) {
     try {
-        const clase = await Clase.find(req.params.claseId);  // Trae todas las clases de la BD
+        const clase = await Clase.find({ _id : req.params.claseId });  // Trae todas las clases de la BD
         res.json(clase);
     } catch (err) {
-        res.json({message: err})
+        console.log(err);
+        res.send({message: err})
     }
 }
 
@@ -233,20 +234,23 @@ exports.getClasesByDuracion = async function (req, res, next) {
     }
 }
 
-exports.getClaseByProfesor = async function (req, res, next) {
+exports.getClasesByProfesor = async function (req, res, next) {
     try {
-        const clase = await Clase.find(req.body.profesor);  // Trae todas las clases de la BD
-        res.json(clase);
+        const clases = await Clase.find({profesor: req.body.profesor});  // Trae todas las clases de la BD
+        res.json(clases);
     } catch (err) {
+        console.log(err)
         res.json({message: err})
     }
 }
 
-exports.getClaseBySolicitante = async function (req, res, next) {
+exports.getSolicitudesById = async function (req, res, next) {
     try {
-        const clases = await Clase.find({ profesor: { $exists: true } }); 
-        res.send(clases);
+        const clase = await Clase.findById(req.params.claseId)
+        const solicitudes = clase.solicitudes
+        res.send(solicitudes); 
     } catch (err) {
+        console.log(err);
         res.json({message: err})
     }
 }
@@ -264,6 +268,16 @@ exports.contratarClase = async function (req, res, next) {
         );
         res.send(solicitarClase);
     } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getSolicitudesByUserId = async function (req, res, next) {
+    try {
+        const clasesSolicitadas = await Clase.find({ solicitudes: { $exists: true, $ne: [] } }).find({"solicitudes.userId" : req.params.userId})
+        res.send(clasesSolicitadas); 
+    } catch (err) {
+        console.log(err);
         res.json({message: err})
     }
 }
