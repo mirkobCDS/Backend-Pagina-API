@@ -24,7 +24,7 @@ exports.getClaseById = async function (req, res, next) {
 exports.createClase = async function (req, res, next) {
     const clase = new Clase({
         profesor: req.body.profesor,
-        nombre: req.body.nombre,
+        titulo: req.body.titulo,
         materia: req.body.materia,
         descripcion: req.body.descripcion,
         duracion: req.body.duracion,
@@ -48,7 +48,7 @@ exports.updateClase = async function (req, res, next) {
     try {
         const updatedClase = await Clase.updateOne(
             { _id: req.params.claseId },
-            {$set: { nombre: req.body.nombre }},
+            {$set: { titulo: req.body.titulo }},
             {$set: { materia: req.body.materia }},
             //El update solo permite updatear de a dos valores, si no no hace nada
             //{ $set: { duracion: req.body.duracion }}, //
@@ -262,7 +262,9 @@ exports.contratarClase = async function (req, res, next) {
     const newSolicitud = {
         "userId": req.body.userId,
         "usuario": req.body.nombreSolicitante,
-        "estado": "Solicitada"
+        "estado": "Solicitada",
+        "telefono": req.body.telefono,
+        "mensaje": req.body.mensaje
     }
     try {
         const solicitarClase = await Clase.updateOne(

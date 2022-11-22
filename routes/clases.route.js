@@ -26,6 +26,9 @@ router.post('/by_profesor', ClasesController.getClasesByProfesor);
 router.patch('/solicitar_clase/:claseId', ClasesController.contratarClase);
 router.get('/solicitudes/:claseId', ClasesController.getSolicitudesById);
 router.get('/solicitudes/user/:userId', ClasesController.getSolicitudesByUserId);
-
+// router.patch('/comentario/:commentId', ClasesController.bloquearYDescargoComentarioById);
+// router.patch('/actualizar_a_grupal/:claseId', ClasesController.actualizarAGrupal);
+// router.patch('/actualizar_a_individual/:claseId', ClasesController.actualizarAIndividual);
+// router.get('/get_clases_solicitadas/:nombreProfesor', ClasesController.getClasesConSolicitudesByProfesor);
 
 module.exports = router;
