@@ -5,6 +5,7 @@ const ClaseSchema = mongoose.Schema({
     nombre: String,
     descripcion: String,
     materia: String,
+    descripcion: String,
     duracion: String,
     frecuencia: String,
     costo: Number,
@@ -17,7 +18,13 @@ const ClaseSchema = mongoose.Schema({
         valor: Number,
     }],
     isPublicada: Boolean,
-    isGrupal: Boolean
+    isGrupal: Boolean,
+    solicitudes: [{
+        userId: String,
+        usuario: String,
+        estado: String
+    }],
+    estado: String
 })
 
 module.exports = mongoose.model('Clase', ClaseSchema);
