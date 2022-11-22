@@ -5,7 +5,6 @@ const ClaseSchema = mongoose.Schema({
     nombre: String,
     descripcion: String,
     materia: String,
-    descripcion: String,
     duracion: String,
     frecuencia: String,
     costo: Number,
