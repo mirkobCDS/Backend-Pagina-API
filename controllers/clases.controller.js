@@ -31,6 +31,7 @@ exports.createClase = async function (req, res, next) {
         duracion: req.body.duracion,
         frecuencia: req.body.frecuencia,
         costo: req.body.costo,
+        tipo: req.body.tipo,
         valoracion: req.body.valoracion,
         comentarios: req.body.comentarios,
         calificaciones: req.body.calificaciones,
@@ -49,13 +50,7 @@ exports.updateClase = async function (req, res, next) {
     try {
         const updatedClase = await Clase.updateOne(
             { _id: req.params.claseId },
-            {$set: { nombre: req.body.nombre }},
-            {$set: { materia: req.body.materia }},
-            //El update solo permite updatear de a dos valores, si no no hace nada
-            //{ $set: { duracion: req.body.duracion }}, //
-           //{ $set: { frecuencia: req.body.frecuencia }}
-           //{ $set: { costo: req.body.costo }},
-           // { $set: { descripcion: req.body.descripcion }}
+            {$set: { nombre: req.body.nombre, materia: req.body.materia, duracion: req.body.duracion, frecuencia: req.body.frecuencia, costo: req.body.costo, descripcion: req.body.descripcion }}
         );
         res.json(updatedClase);
     } catch (err) {
@@ -266,6 +261,9 @@ exports.contratarClase = async function (req, res, next) {
         "estado": "Solicitada",
         "telefono": req.body.telefono,
         "mensaje": req.body.mensaje
+        
+  
+
     }
     try {
         const solicitarClase = await Clase.updateOne(
@@ -296,6 +294,14 @@ exports.createSolicitud = async function (req, res, next) {
         horario: req.body.horario,
         mensaje: req.body.mensaje,
         estado: "Solicitada",
+        costo: req.body.costo,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        materia: req.body.materia,
+        profesor: req.body.profesor,
+        tipo: req.body.tipo,
+        frecuencia: req.body.frecuencia,
+        calificacion: req.body.calificacion
     });
     try {
         const createdSolicitud = await solicitud.save();

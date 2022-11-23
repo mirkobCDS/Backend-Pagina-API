@@ -7,7 +7,16 @@ const SolicitudSchema = mongoose.Schema({
     horario: String,
     mensaje: String,
     estado: String,
-    costo: Number
+    costo: Number,
+    nombre: String,
+    descripcion: String,
+    materia: String,
+    profesor: String,
+    horario: String,
+    tipo: String,
+    frecuencia: String,
+    calificacion: Number
+
 })
 
 module.exports = mongoose.model('Solicitud', SolicitudSchema);

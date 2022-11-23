@@ -9,6 +9,7 @@ const ClaseSchema = mongoose.Schema({
     frecuencia: String,
     costo: Number,
     valoracion: Number,
+    tipo: String,
     comentarios: [{
         comentario: String,
         isVisible: Boolean
