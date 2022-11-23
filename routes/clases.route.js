@@ -25,6 +25,6 @@ router.get('/by_profesor', ClasesController.getClasesByProfesor);
 router.patch('/solicitar_clase/:claseId', ClasesController.contratarClase);
 router.get('/solicitudes/:claseId', ClasesController.getSolicitudesById);
 router.get('/solicitudes/user/:userId', ClasesController.getSolicitudesByUserId);
-
+router.get('/solicitadas', ClasesController.getClasesConSolicitudes);
 
 module.exports = router;

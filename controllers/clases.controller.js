@@ -281,3 +281,14 @@ exports.getSolicitudesByUserId = async function (req, res, next) {
         res.json({message: err})
     }
 }
+
+exports.getClasesConSolicitudes = async function (req, res, next) {
+    try {
+        const clasesSolicitadas = await Clase.find({ solicitudes: { $exists: true, $ne: [] } })
+        res.send(clasesSolicitadas); 
+    } catch (err) {
+        console.log(err);
+        res.json({message: err})
+    }
+}
+
