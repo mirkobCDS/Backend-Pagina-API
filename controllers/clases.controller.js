@@ -1,5 +1,6 @@
 const Clase = require('../models/Clase.model');
 const Comentario = require('../models/Comment.model');
+const Solicitud = require('../models/Solicitud.model');
 
 
 exports.getClases = async function (req, res, next) {
@@ -24,7 +25,7 @@ exports.getClaseById = async function (req, res, next) {
 exports.createClase = async function (req, res, next) {
     const clase = new Clase({
         profesor: req.body.profesor,
-        titulo: req.body.titulo,
+        nombre: req.body.nombre,
         materia: req.body.materia,
         descripcion: req.body.descripcion,
         duracion: req.body.duracion,
@@ -48,7 +49,7 @@ exports.updateClase = async function (req, res, next) {
     try {
         const updatedClase = await Clase.updateOne(
             { _id: req.params.claseId },
-            {$set: { titulo: req.body.titulo }},
+            {$set: { nombre: req.body.nombre }},
             {$set: { materia: req.body.materia }},
             //El update solo permite updatear de a dos valores, si no no hace nada
             //{ $set: { duracion: req.body.duracion }}, //
@@ -279,10 +280,27 @@ exports.contratarClase = async function (req, res, next) {
 
 exports.getSolicitudesByUserId = async function (req, res, next) {
     try {
-        const clasesSolicitadas = await Clase.find({ solicitudes: { $exists: true, $ne: [] } }).find({"solicitudes.userId" : req.params.userId})
-        res.send(clasesSolicitadas); 
+        const solicitudes = await Solicitud.find({"idAlumno" : req.params.userId})
+        res.send(solicitudes); 
     } catch (err) {
         console.log(err);
+        res.json({message: err})
+    }
+}
+
+exports.createSolicitud = async function (req, res, next) {
+    const solicitud = new Solicitud({
+        idAlumno: req.body.idAlumno,
+        idClase: req.body.idClase,
+        telefono: req.body.telefono,
+        horario: req.body.horario,
+        mensaje: req.body.mensaje,
+        estado: "Solicitada",
+    });
+    try {
+        const createdSolicitud = await solicitud.save();
+        res.json(createdSolicitud);
+    } catch (err) {
         res.json({message: err})
     }
 }

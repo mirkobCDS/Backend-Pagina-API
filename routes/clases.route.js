@@ -24,6 +24,7 @@ router.get('/by_frecuencia', ClasesController.getClasesByFrecuencia);
 router.get('/by_duracion', ClasesController.getClasesByDuracion);
 router.get('/by_profesor/:profesor', ClasesController.getClasesByProfesor);
 router.patch('/solicitar_clase/:claseId', ClasesController.contratarClase);
+router.post('/solicitar', ClasesController.createSolicitud);
 router.get('/solicitudes/:claseId', ClasesController.getSolicitudesById);
 router.get('/solicitudes/user/:userId', ClasesController.getSolicitudesByUserId);
 // router.patch('/comentario/:commentId', ClasesController.bloquearYDescargoComentarioById);
