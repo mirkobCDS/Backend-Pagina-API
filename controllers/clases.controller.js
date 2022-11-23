@@ -286,6 +286,26 @@ exports.getSolicitudesByUserId = async function (req, res, next) {
     }
 }
 
+exports.getSolicitudesByProfesor = async function (req, res, next) {
+    try {
+        const solicitudes = await Solicitud.find({"profesor" : req.params.nombreProfesor})
+        res.send(solicitudes); 
+    } catch (err) {
+        console.log(err);
+        res.json({message: err})
+    }
+}
+
+exports.updateSolicitud = async function (req, res, next) {
+    try {
+        const solicitudes = await Solicitud.updateOne({"_id" : req.params.solicitudId},{$set:{"estado":req.params.estado}})
+        res.send(solicitudes); 
+    } catch (err) {
+        console.log(err);
+        res.json({message: err})
+    }
+}
+
 exports.createSolicitud = async function (req, res, next) {
     const solicitud = new Solicitud({
         idAlumno: req.body.idAlumno,
