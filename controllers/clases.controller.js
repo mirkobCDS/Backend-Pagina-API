@@ -239,7 +239,7 @@ exports.getClasesByDuracion = async function (req, res, next) {
 
 exports.getClasesByProfesor = async function (req, res, next) {
     try {
-        const clases = await Clase.find({profesor: req.body.profesor});  // Trae todas las clases de la BD
+        const clases = await Clase.find({profesor: req.params.profesor});  // Trae todas las clases de la BD
         res.json(clases);
     } catch (err) {
         console.log(err)

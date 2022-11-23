@@ -117,7 +117,8 @@ exports.loginUser = async function (req, res, next) {
         if (!validPassword) return res.status(400).send(JSON.stringify(error));
         //Creo JWT y lo asigno
         const data = { rol: user.rol,
-            id: user._id};
+            id: user._id,
+            nombre: user.nombre};
         
         
         res.status(200).send(JSON.stringify(data));
