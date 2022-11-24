@@ -155,16 +155,41 @@ exports.comentariosByClaseId = async function (req, res, next) {
 
 exports.actualizarValoracion = async function (req, res, next) {
     try {
-        const clase = await Clase.findById(req.params.claseId);
-        const calificaciones = clase.calificaciones.map(function (calificacion) { return calificacion.valor; });
-        const average = calificaciones.reduce((a, b) => a + b, 0) / calificaciones.length;
-        const updatedClase = await Clase.updateOne(
-            { _id: req.params.claseId },
+        const idClase = req.params.claseId
+        const clase = await Clase.findById(idClase);
+        const solicitud = await Solicitud.find({idClase:idClase})
+        console.log(solicitud)
+        const calificacion = parseInt(clase.valoracion,10)
+        const division = (calificacion + parseInt(req.params.valoracion))
+        const average = Math.trunc(division/2)
+        updateValoracionSolicitud(idClase, average)
+        const updatedSolicitud = Solicitud.updateMany(
+            { _id: solicitud._id },
             { $set: { valoracion: average }},
         );
-        res.json(updatedClase);
+        const updatedClase = await Clase.updateOne(
+            { _id: idClase },
+            { $set: { valoracion: average }},
+        );
+        res.json(updatedSolicitud);
     } catch (err) {
         res.json({message: err})
+    }
+
+    function updateValoracionSolicitud(idClase, average){
+       
+    }
+
+    exports.publicarClase = async function (req, res, next) {
+        try {
+            const updatedClase = await Clase.updateOne(
+                { _id: req.params.claseId },
+                { $set: { isPublicada: true }},
+            );
+            res.json(updatedClase);
+        } catch (err) {
+            res.json({message: err})
+        }
     }
 }
 
@@ -190,7 +215,7 @@ exports.getClasesByValoracionMayorA = async function (req, res, next) {
 
 exports.getClasesGrupales = async function (req, res, next) {
     try {
-        const clasesGrupales = await Clase.find({ isGrupal: true });
+        const clasesGrupales = await Clase.find({ tipo: "Grupal" });
         res.send(clasesGrupales);
     } catch (err) {
         res.json({message: err})
@@ -199,7 +224,7 @@ exports.getClasesGrupales = async function (req, res, next) {
 
 exports.getClasesIndividuales = async function (req, res, next) {
     try {
-        const clasesIndividuales = await Clase.find({ isGrupal: false });
+        const clasesIndividuales = await Clase.find({  tipo: "Individual" });
         res.send(clasesIndividuales);
     } catch (err) {
         res.json({message: err})
@@ -208,7 +233,7 @@ exports.getClasesIndividuales = async function (req, res, next) {
 
 exports.getClasesByMateria = async function (req, res, next) {
     try {
-        const clasesByMateria = await Clase.find({ materia: req.body.materia });
+        const clasesByMateria = await Clase.find({ materia: req.params.materia });
         res.send(clasesByMateria);
     } catch (err) {
         res.json({message: err})
@@ -217,7 +242,7 @@ exports.getClasesByMateria = async function (req, res, next) {
 
 exports.getClasesByFrecuencia = async function (req, res, next) {
     try {
-        const clasesByFrecuencia = await Clase.find({ frecuencia: req.body.frecuencia });
+        const clasesByFrecuencia = await Clase.find({ frecuencia: req.params.frecuencia });
         res.send(clasesByFrecuencia);
     } catch (err) {
         res.json({message: err})
