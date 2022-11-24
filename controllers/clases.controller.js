@@ -356,7 +356,8 @@ exports.createSolicitud = async function (req, res, next) {
         tipo: req.body.tipo,
         frecuencia: req.body.frecuencia,
         valoracion: req.body.valoracion,
-        mail: req.body.mail
+        mail: req.body.mail,
+        duracion: req.body.duracion
     });
     try {
         const createdSolicitud = await solicitud.save();
