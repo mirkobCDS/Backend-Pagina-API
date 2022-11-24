@@ -15,7 +15,8 @@ const SolicitudSchema = mongoose.Schema({
     horario: String,
     tipo: String,
     frecuencia: String,
-    calificacion: Number
+    calificacion: Number,
+    valoracion : Number
 
 })
 
