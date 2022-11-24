@@ -16,7 +16,8 @@ const SolicitudSchema = mongoose.Schema({
     tipo: String,
     frecuencia: String,
     calificacion: Number,
-    valoracion : Number
+    valoracion : Number,
+    mail: String
 
 })
 

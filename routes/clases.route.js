@@ -17,6 +17,7 @@ router.get('/comentarios/:claseId', ClasesController.comentariosByClaseId);
 router.patch('/actualizar_valoracion/:claseId/:valoracion', ClasesController.actualizarValoracion);
 router.get('/order_by_valoracion', ClasesController.getClasesByValoracion);
 router.get('/order_by_valoracion/:valoracion', ClasesController.getClasesByValoracionMayorA);
+router.get('/by_valoracion/:valoracion', ClasesController.getClasesByValoracion);
 router.get('/grupales', ClasesController.getClasesGrupales);
 router.get('/individuales', ClasesController.getClasesIndividuales);
 router.get('/by_materia/:materia', ClasesController.getClasesByMateria);

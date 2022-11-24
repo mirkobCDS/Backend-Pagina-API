@@ -213,6 +213,15 @@ exports.getClasesByValoracionMayorA = async function (req, res, next) {
     }
 }
 
+exports.getClasesByValoracion = async function (req, res, next) {
+    try {
+        const clases = await Clase.find({valoracion : req.params.valoracion  });
+        res.send(clases);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
 exports.getClasesGrupales = async function (req, res, next) {
     try {
         const clasesGrupales = await Clase.find({ tipo: "Grupal" });
@@ -346,7 +355,8 @@ exports.createSolicitud = async function (req, res, next) {
         profesor: req.body.profesor,
         tipo: req.body.tipo,
         frecuencia: req.body.frecuencia,
-        valoracion: req.body.valoracion
+        valoracion: req.body.valoracion,
+        mail: req.body.mail
     });
     try {
         const createdSolicitud = await solicitud.save();
