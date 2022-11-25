@@ -68,6 +68,15 @@ exports.deleteClase = async function (req, res, next) {
     }
 }
 
+exports.deleteSolicitud = async function (req, res, next) {
+    try {
+        const removedClase = await Solicitud.remove({_id: req.params.solicitudId});
+        res.json(removedClase);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
 exports.publicarClase = async function (req, res, next) {
     try {
         const updatedClase = await Clase.updateOne(

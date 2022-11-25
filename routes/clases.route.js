@@ -35,5 +35,6 @@ router.patch('/solicitudes/updateEstado/:solicitudId/:estado', ClasesController.
 // router.patch('/actualizar_a_grupal/:claseId', ClasesController.actualizarAGrupal);
 // router.patch('/actualizar_a_individual/:claseId', ClasesController.actualizarAIndividual);
 router.get('/solicitudes/profesor/:nombreProfesor', ClasesController.getSolicitudesByProfesor);
+router.delete('/solicitud/:solicitudId', ClasesController.deleteSolicitud);
 
 module.exports = router;
