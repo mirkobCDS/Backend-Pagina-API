@@ -14,6 +14,8 @@ router.patch('/despublicar/:claseId', ClasesController.despublicarClase);
 router.patch('/comentar/:claseId', ClasesController.comentarClase);
 router.patch('/valorar/:claseId', ClasesController.valorarClase);
 router.get('/comentarios/:claseId', ClasesController.comentariosByClaseId);
+router.patch('/aceptarComentario/:comentarioId', ClasesController.aceptarComentario);
+router.patch('/rechazarComentario/:comentarioId', ClasesController.rechazarComentario);
 router.patch('/actualizar_valoracion/:claseId/:valoracion', ClasesController.actualizarValoracion);
 router.get('/order_by_valoracion', ClasesController.getClasesByValoracion);
 router.get('/order_by_valoracion/:valoracion', ClasesController.getClasesByValoracionMayorA);

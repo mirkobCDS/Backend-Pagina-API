@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const CommentSchema = mongoose.Schema({
     usuario: String,
     comentario: String,
+    isVisible: Boolean,
     isBloqueado: {
         type : Boolean, 
         default : false

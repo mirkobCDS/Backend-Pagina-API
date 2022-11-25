@@ -12,7 +12,9 @@ const ClaseSchema = mongoose.Schema({
     tipo: String,
     comentarios: [{
         comentario: String,
-        isVisible: Boolean
+        isVisible: Boolean,
+        usuario: String,
+        isBloqueado: Boolean
     }],
     calificaciones: [{
         valor: Number,

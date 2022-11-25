@@ -112,6 +112,7 @@ exports.comentarClase = async function (req, res, next) {
     const newComment = new Comentario({
         "usuario": req.body.usuario,
         "comentario": req.body.comentario,
+        "isVisible": false,
         "isBloqueado": false,
         "descargo": ""
     })
@@ -148,6 +149,29 @@ exports.comentariosByClaseId = async function (req, res, next) {
         const clase = await Clase.findById(req.params.claseId)
         const comentarios = clase.comentarios
         res.send(comentarios);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.aceptarComentario = async function (req, res, next) {
+    try {
+        const updatedComentario = await Clase.updateOne(
+            {comentarios: {$elemMatch:{_id: req.params.comentarioId}}},
+            { $set: {"comentarios.$.isVisible": true }},
+        );
+        res.json(updatedComentario);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+exports.rechazarComentario = async function (req, res, next) {
+    try {
+        const updatedComentario = await Clase.updateOne(
+            {comentarios: {$elemMatch:{_id: req.params.comentarioId}}},
+            { $set: {"comentarios.$.isVisible": false, "comentarios.$.isBloqueado": true}},
+        );
+        res.json(updatedComentario);
     } catch (err) {
         res.json({message: err})
     }
