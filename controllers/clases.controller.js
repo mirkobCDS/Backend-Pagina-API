@@ -192,16 +192,12 @@ exports.actualizarValoracion = async function (req, res, next) {
     try {
         const idClase = req.params.claseId
         const clase = await Clase.findById(idClase);
-        const solicitud = await Solicitud.find({idClase:idClase})
-        console.log(solicitud)
+
         const calificacion = parseInt(clase.valoracion,10)
         const division = (calificacion + parseInt(req.params.valoracion))
         const average = Math.trunc(division/2)
-        updateValoracionSolicitud(idClase, average)
-        const updatedSolicitud = Solicitud.updateMany(
-            { _id: solicitud._id },
-            { $set: { valoracion: average }},
-        );
+
+        const updatedSolicitud = await Solicitud.updateMany({"idClase":req.params.claseId},{$set:{"valoracion":average}})
         const updatedClase = await Clase.updateOne(
             { _id: idClase },
             { $set: { valoracion: average }},
@@ -330,9 +326,6 @@ exports.contratarClase = async function (req, res, next) {
         "estado": "Solicitada",
         "telefono": req.body.telefono,
         "mensaje": req.body.mensaje
-        
-  
-
     }
     try {
         const solicitarClase = await Clase.updateOne(
