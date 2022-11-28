@@ -33,7 +33,6 @@ exports.createClase = async function (req, res, next) {
         frecuencia: req.body.frecuencia,
         costo: req.body.costo,
         tipo: req.body.tipo,
-        valoracion: req.body.valoracion,
         comentarios: req.body.comentarios,
         calificaciones: req.body.calificaciones,
         isPublicada: false,
@@ -192,10 +191,14 @@ exports.actualizarValoracion = async function (req, res, next) {
     try {
         const idClase = req.params.claseId
         const clase = await Clase.findById(idClase);
+        
+        let average = req.params.valoracion
 
-        const calificacion = parseInt(clase.valoracion,10)
-        const division = (calificacion + parseInt(req.params.valoracion))
-        const average = Math.trunc(division/2)
+        if (clase.valoracion!=null){
+          const calificacion = parseInt(clase.valoracion,10)
+          const division = (calificacion + parseInt(req.params.valoracion))
+          average = Math.trunc(division/2)
+        }
 
         const updatedSolicitud = await Solicitud.updateMany({"idClase":req.params.claseId},{$set:{"valoracion":average}})
         const updatedClase = await Clase.updateOne(
