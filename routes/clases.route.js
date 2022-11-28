@@ -36,5 +36,8 @@ router.patch('/solicitudes/updateEstado/:solicitudId/:estado', ClasesController.
 // router.patch('/actualizar_a_individual/:claseId', ClasesController.actualizarAIndividual);
 router.get('/solicitudes/profesor/:nombreProfesor', ClasesController.getSolicitudesByProfesor);
 router.delete('/solicitud/:solicitudId', ClasesController.deleteSolicitud);
+router.post('/crearNotificacion', ClasesController.createNotificacion) //nuevo
+router.get('/notificaciones/:idAlumno', ClasesController.getNotificacionesByAlumno) //nuevo
+router.patch('/abrirNotificacion/:id', ClasesController.actualizarNotificacion) //nuevo
 
 module.exports = router;

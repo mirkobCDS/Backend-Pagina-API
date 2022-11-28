@@ -41,6 +41,25 @@ exports.getUserByMail = async function (req, res, next) {
     }
 }
 
+exports.getUserByName = async function (req, res, next) {
+    try {
+        const user = await User.findOne({nombre:req.params.nombre});
+        if (user == null){
+            data = {
+                _id:-1
+            }
+            res.send(data)
+        }
+        else{
+            res.send(user);
+        }
+        
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+
 exports.deleteById = async function (req, res, next) {
     try {
     const removedUser = await User.remove({_id: req.params.userId});

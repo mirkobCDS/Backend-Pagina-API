@@ -1,6 +1,7 @@
 const Clase = require('../models/Clase.model');
 const Comentario = require('../models/Comment.model');
 const Solicitud = require('../models/Solicitud.model');
+const Notificacion = require('../models/Notificacion.model');
 
 
 exports.getClases = async function (req, res, next) {
@@ -179,7 +180,7 @@ exports.rechazarComentario = async function (req, res, next) {
     try {
         const updatedComentario = await Clase.updateOne(
             {comentarios: {$elemMatch:{_id: req.params.comentarioId}}},
-            { $set: {"comentarios.$.isVisible": false, "comentarios.$.isBloqueado": true}},
+            { $set: {"comentarios.$.isVisible": false, "comentarios.$.isBloqueado": true, "comentarios.$.descargo":req.body.descargo}},
         );
         res.json(updatedComentario);
     } catch (err) {
@@ -397,6 +398,42 @@ exports.createSolicitud = async function (req, res, next) {
         const createdSolicitud = await solicitud.save();
         res.json(createdSolicitud);
     } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.createNotificacion = async function (req, res, next) {
+    const notificacion = new Notificacion({
+        idAlumno: req.body.idAlumno,
+        nombreClase: req.body.nombreClase,
+        descargo: req.body.descargo,
+        nombreProfesor: req.body.nombreProfesor,
+        isAbierta: false
+    });
+    try {
+        const createdNotificacion = await notificacion.save();
+        res.json(createdNotificacion);
+    } catch (err) {
+        res.json({message: err})
+    }
+}
+
+exports.getNotificacionesByAlumno = async function (req, res, next) {
+    try {
+        const notificaciones = await Notificacion.find({"idAlumno" : req.params.idAlumno})
+        res.send(notificaciones); 
+    } catch (err) {
+        console.log(err);
+        res.json({message: err})
+    }
+}
+
+exports.actualizarNotificacion = async function (req, res, next) {
+    try {
+        const notificaciones = await Notificacion.updateOne({"_id" : req.params.id},{$set:{"isAbierta":true}})
+        res.send(notificaciones); 
+    } catch (err) {
+        console.log(err);
         res.json({message: err})
     }
 }
